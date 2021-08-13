@@ -9,17 +9,16 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
     private Long id;
     private String title;
-    private Integer total_pages;
-    private Double rating;
+    @Column(name = "isbn13")
     private String isbn;
-    private Date published_date;
+    private Integer num_pages;
+    private Date publication_date;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id")
@@ -27,15 +26,7 @@ public class Book {
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "book_genres",
-            joinColumns = { @JoinColumn(name = "book_id") },
-            inverseJoinColumns = { @JoinColumn(name = "genre_id") }
-    )
-    private Set<Genre> genres = new HashSet<>();
-
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "book_authors",
+            name = "book_author",
             joinColumns = { @JoinColumn(name = "book_id") },
             inverseJoinColumns = { @JoinColumn(name = "author_id") }
     )
